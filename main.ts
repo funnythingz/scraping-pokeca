@@ -4,9 +4,10 @@ import { chromium } from '@playwright/test'
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
+  const url = 'https://www.pokemon-card.com/deck/confirm.html/deckID/'
   const deckID = 'nQnngg-kSz0DZ-ngLQnL'
 
-  await page.goto(`https://www.pokemon-card.com/deck/confirm.html/deckID/${deckID}`)
+  await page.goto(`${url}${deckID}`)
   const content = await page.evaluate(() => {
     const table = document.querySelectorAll('#cardImagesView .KSTable')
     return Array.from(table).map(function (v) {
@@ -17,7 +18,9 @@ import { chromium } from '@playwright/test'
     })
   })
 
-  console.log(content)
+  console.log({
+    response: content
+  })
 
   await browser.close()
 })();
